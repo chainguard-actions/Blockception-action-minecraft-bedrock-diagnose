@@ -1,0 +1,30 @@
+name: Test custom empty folder
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create empty project folder
+        run: mkdir -p /tmp/mc-empty-project
+
+      - name: Run action with custom empty folder
+        id: action
+        uses: .
+        with:
+          folder: /tmp/mc-empty-project
+        continue-on-error: true
+
+      - name: Assert action succeeded with empty folder
+        run: |
+          echo "Action outcome: ${{ steps.action.outcome }}"
+          # With an empty folder (no manifests), the action should succeed
+          # since there are no packs to diagnose and no errors to report
+          if [ "${{ steps.action.outcome }}" != "success" ]; then
+            echo "FAIL: expected success with empty folder, got ${{ steps.action.outcome }}"
+            exit 1
+          fi
+          echo "PASS: action succeeded with empty folder"

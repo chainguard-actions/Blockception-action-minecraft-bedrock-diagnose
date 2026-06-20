@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "build",
+      "isBackground": false,
+      "group": "build",
+      "label": "npm compile 'action-minecraft-bedrock-diagnose'",
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "type": "npm",
+      "script": "test",
+      "isBackground": false,
+      "group": "build",
+      "problemMatcher": ["$tsc"]
+    }
+  ]
+}

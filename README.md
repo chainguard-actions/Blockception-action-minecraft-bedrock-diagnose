@@ -8,6 +8,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
+| v1.20.71-1 | [`v1.20.71-1`](https://github.com/chainguard-actions/Blockception-action-minecraft-bedrock-diagnose/tree/v1.20.71-1) | [`7db2d8c`](https://github.com/Blockception/action-minecraft-bedrock-diagnose/commit/7db2d8c5f9c6bd5c85f2dde83950edb758f4c0c6) |
 | v1.21.44 | [`v1.21.44`](https://github.com/chainguard-actions/Blockception-action-minecraft-bedrock-diagnose/tree/v1.21.44) | [`9428626`](https://github.com/Blockception/action-minecraft-bedrock-diagnose/commit/9428626ddf0bda74d851ea5ded760c63ea9b86cd) |
 
 ## Privacy

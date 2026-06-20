@@ -1,16 +1,57 @@
-# Blockception/action-minecraft-bedrock-diagnose
+# Action Minecraft Bedrock Diagnose
 
-Tests the content of your minecraft project for errors and outputs them to the action console as well as mark it as failed
+[![tagged-release](https://github.com/Blockception/action-minecraft-bedrock-diagnose/actions/workflows/tagged-release.yml/badge.svg)](https://github.com/Blockception/action-minecraft-bedrock-diagnose/actions/workflows/tagged-release.yml)
+[![npm-unit-test](https://github.com/Blockception/action-minecraft-bedrock-diagnose/actions/workflows/npm-test.yml/badge.svg)](https://github.com/Blockception/action-minecraft-bedrock-diagnose/actions/workflows/npm-test.yml)
 
-Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/Blockception/action-minecraft-bedrock-diagnose](https://github.com/Blockception/action-minecraft-bedrock-diagnose).
 
-## Versions
+Tests the content of your minecraft project for errors and outputs them to the action console as well as mark it as failed.
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1.20.71-1 | [`v1.20.71-1`](https://github.com/chainguard-actions/Blockception-action-minecraft-bedrock-diagnose/tree/v1.20.71-1) | [`7db2d8c`](https://github.com/Blockception/action-minecraft-bedrock-diagnose/commit/7db2d8c5f9c6bd5c85f2dde83950edb758f4c0c6) |
-| v1.21.44 | [`v1.21.44`](https://github.com/chainguard-actions/Blockception-action-minecraft-bedrock-diagnose/tree/v1.21.44) | [`9428626`](https://github.com/Blockception/action-minecraft-bedrock-diagnose/commit/9428626ddf0bda74d851ea5ded760c63ea9b86cd) |
+## Example
 
+
+```yml
+# This is a basic workflow to help you get started with Actions
+name: minecraft-bedrock-diagnose
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: 📦 Checkout Repository
+        uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - uses: Blockception/action-minecraft-bedrock-diagnose@latest
+        with: 
+          folder: ${{github.workspace}}/project
+```
+
+## Contributing
+
+First, read the [contributing guide](./CONTRIBUTING.md). fork the project, clone it and run the following commands:
+
+**Installation**
+
+```cmd
+  npm ci
+  npm update
+```
 ## Privacy
 
 This Action contacts Chainguard's licensing server to verify authorization. Connection metadata (IP address, GitHub repository identifier, timestamp, and any metadata encoded in the auth token) is transmitted to Chainguard, Inc. even if authorization is denied in accordance with our [Privacy Notice](https://www.chainguard.dev/legal/privacy-notice)

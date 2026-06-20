@@ -1,0 +1,44 @@
+name: Test with a minimal Minecraft Bedrock behavior pack
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create minimal behavior pack structure
+        run: |
+          mkdir -p /tmp/mc-project/behavior_pack
+          cat > /tmp/mc-project/behavior_pack/manifest.json << 'EOF'
+          {
+            "format_version": 2,
+            "header": {
+              "description": "Test Behavior Pack",
+              "name": "Test BP",
+              "uuid": "12345678-1234-1234-1234-123456789abc",
+              "version": [1, 0, 0],
+              "min_engine_version": [1, 20, 0]
+            },
+            "modules": [
+              {
+                "description": "Test Behavior Pack Module",
+                "type": "data",
+                "uuid": "87654321-4321-4321-4321-cba987654321",
+                "version": [1, 0, 0]
+              }
+            ]
+          }
+          EOF
+
+      - name: Run action against behavior pack folder
+        id: action
+        uses: .
+        with:
+          folder: /tmp/mc-project
+
+      - name: Assert action completed
+        run: |
+          echo "Action completed processing behavior pack"
+          echo "PASS"

@@ -1,0 +1,57 @@
+{
+  "name": "action-minecraft-bedrock-diagnose",
+  "version": "1.20.62-0",
+  "description": "Tests the content of your minecraft project for errors and outputs them to the action console as well as mark it as failed",
+  "main": "out/src/action.js",
+  "scripts": {
+    "compile": "tsc && npx ncc build -m",
+    "build": "npm run clean && npm run compile",
+    "test": "mocha --debug-brk",
+    "clean": "rimraf lib",
+    "pretest": "npm run compile",
+    "prepublishOnly": "npm test && npm run compile",
+    "preversion": "",
+    "postversion": "git push && git push --tags",
+    "version": "git add -A src",
+    "watch": "tsc -w -p ./src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blockception/action-minecraft-bedrock-diagnose.git"
+  },
+  "keywords": [
+    "github",
+    "action",
+    "minecraft",
+    "bedrock",
+    "diagnose",
+    "unittest"
+  ],
+  "author": "Blockception Ltd",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Blockception/action-minecraft-bedrock-diagnose/issues"
+  },
+  "homepage": "https://github.com/Blockception/action-minecraft-bedrock-diagnose#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "bc-minecraft-bedrock-diagnoser": "^1.20.61-6",
+    "bc-minecraft-bedrock-project": "^1.20.60-7",
+    "bc-minecraft-bedrock-types": "^1.20.51-2",
+    "bc-minecraft-project": "^1.20.32-0",
+    "fast-glob": "^3.3.2",
+    "picomatch": "^3.0.1",
+    "vscode-languageserver-textdocument": "^1.0.11"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.11",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.14",
+    "@vercel/ncc": "^0.38.1",
+    "chai": "^5.0.3",
+    "mocha": "^10.2.0",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

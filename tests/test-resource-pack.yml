@@ -1,0 +1,22 @@
+name: Test with committed resource pack fixture
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run action pointing at committed resource pack fixture
+        id: action
+        uses: .
+        with:
+          folder: ${{ github.workspace }}/pristine/Blockception--action-minecraft-bedrock-diagnose/v1.20.62-0/tests/fixtures
+        continue-on-error: true
+      - name: Assert action completed successfully
+        run: |
+          echo "outcome: ${{ steps.action.outcome }}"
+          if [ "${{ steps.action.outcome }}" != "success" ]; then
+            echo "FAIL: expected action to succeed when diagnosing a valid resource pack"
+            exit 1
+          fi
+          echo "PASS"

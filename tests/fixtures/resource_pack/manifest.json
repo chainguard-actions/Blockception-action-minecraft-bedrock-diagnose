@@ -1,0 +1,18 @@
+{
+  "format_version": 2,
+  "header": {
+    "description": "Test resource pack for CI",
+    "name": "Test Resource Pack",
+    "uuid": "aabbccdd-1234-1234-1234-aabbccddeeff",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 20, 0]
+  },
+  "modules": [
+    {
+      "description": "Test resource pack module",
+      "type": "resources",
+      "uuid": "aabbccdd-1234-1234-1234-aabbccddeef0",
+      "version": [1, 0, 0]
+    }
+  ]
+}

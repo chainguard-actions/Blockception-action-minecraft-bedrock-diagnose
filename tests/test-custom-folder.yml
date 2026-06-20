@@ -1,0 +1,46 @@
+name: Test custom folder with Minecraft project
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Create minimal Minecraft Bedrock behavior pack
+        run: |
+          mkdir -p /tmp/mc-project/behavior_pack
+          cat > /tmp/mc-project/behavior_pack/manifest.json << 'EOF'
+          {
+            "format_version": 2,
+            "header": {
+              "description": "Test behavior pack",
+              "name": "Test Pack",
+              "uuid": "12345678-1234-1234-1234-123456789abc",
+              "version": [1, 0, 0],
+              "min_engine_version": [1, 20, 0]
+            },
+            "modules": [
+              {
+                "description": "Test behavior pack module",
+                "type": "data",
+                "uuid": "12345678-1234-1234-1234-123456789abd",
+                "version": [1, 0, 0]
+              }
+            ]
+          }
+          EOF
+      - name: Run action with custom folder
+        id: action
+        uses: .
+        with:
+          folder: /tmp/mc-project
+        continue-on-error: true
+      - name: Assert action completed
+        run: |
+          echo "outcome: ${{ steps.action.outcome }}"
+          # The action should succeed - it found a pack and diagnosed it
+          if [ "${{ steps.action.outcome }}" != "success" ]; then
+            echo "FAIL: expected action to succeed with a valid Minecraft behavior pack"
+            exit 1
+          fi
+          echo "PASS"

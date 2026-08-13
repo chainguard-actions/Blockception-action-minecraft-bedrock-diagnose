@@ -1,43 +1,26 @@
-name: Test with valid Minecraft Bedrock behavior pack
+name: Test valid behavior pack
 on:
   workflow_dispatch:
-
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Create valid behavior pack structure
+      - name: Ensure GITHUB_STEP_SUMMARY is set
         run: |
-          mkdir -p /tmp/mc-project/behavior_pack
-          cat > /tmp/mc-project/behavior_pack/manifest.json << 'EOF'
-          {
-            "format_version": 2,
-            "header": {
-              "name": "Test Behavior Pack",
-              "description": "A test behavior pack",
-              "uuid": "12345678-1234-1234-1234-123456789abc",
-              "version": [1, 0, 0],
-              "min_engine_version": [1, 20, 0]
-            },
-            "modules": [
-              {
-                "type": "data",
-                "uuid": "87654321-4321-4321-4321-cba987654321",
-                "version": [1, 0, 0]
-              }
-            ]
-          }
-          EOF
+          if [ -z "$GITHUB_STEP_SUMMARY" ]; then
+            echo "GITHUB_STEP_SUMMARY=/tmp/step-summary.md" >> "$GITHUB_ENV"
+            touch /tmp/step-summary.md
+          fi
 
       - id: action
-        name: Run diagnose on valid behavior pack
+        name: Run diagnose on valid behavior pack fixture
         uses: .
         with:
-          folder: /tmp/mc-project
+          folder: ${{ github.workspace }}/tests/fixtures/behavior-pack-project
 
       - name: Assert action completed successfully
         run: |
-          echo "Action completed without failure on valid behavior pack"
+          echo "Action completed successfully with valid behavior pack"
           echo "PASS"

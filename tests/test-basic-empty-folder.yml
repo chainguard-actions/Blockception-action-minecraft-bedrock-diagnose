@@ -1,7 +1,6 @@
 name: Test basic usage with empty folder
 on:
   workflow_dispatch:
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -11,13 +10,20 @@ jobs:
       - name: Create empty test folder
         run: mkdir -p /tmp/mc-empty
 
+      - name: Ensure GITHUB_STEP_SUMMARY is set
+        run: |
+          if [ -z "$GITHUB_STEP_SUMMARY" ]; then
+            echo "GITHUB_STEP_SUMMARY=/tmp/step-summary.md" >> "$GITHUB_ENV"
+            touch /tmp/step-summary.md
+          fi
+
       - id: action
         name: Run diagnose on empty folder
         uses: .
         with:
           folder: /tmp/mc-empty
 
-      - name: Assert action completed successfully
+      - name: Assert action completed without failure
         run: |
-          echo "Action completed without failure"
+          echo "Action completed successfully with no packs found"
           echo "PASS"

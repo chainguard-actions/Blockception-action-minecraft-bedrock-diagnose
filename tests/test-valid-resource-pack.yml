@@ -1,4 +1,4 @@
-name: Test default folder input
+name: Test valid resource pack
 on:
   workflow_dispatch:
 jobs:
@@ -15,13 +15,12 @@ jobs:
           fi
 
       - id: action
-        name: Run diagnose with default folder (github.workspace)
+        name: Run diagnose on valid resource pack fixture
         uses: .
-        # No 'folder' input — uses the default: ${{ github.workspace }}
-        # The workspace contains the action repo files but no manifest.json,
-        # so the diagnoser finds no packs and completes without errors.
+        with:
+          folder: ${{ github.workspace }}/tests/fixtures/resource-pack-project
 
-      - name: Assert action completed without failure
+      - name: Assert action completed successfully
         run: |
-          echo "Action completed successfully using default folder (workspace root)"
+          echo "Action completed successfully with valid resource pack"
           echo "PASS"

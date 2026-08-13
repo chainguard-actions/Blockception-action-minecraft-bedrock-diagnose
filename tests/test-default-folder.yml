@@ -1,0 +1,20 @@
+name: Test default folder (github.workspace)
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: action
+        name: Run diagnose with default folder (no folder input)
+        uses: .
+        # No 'folder' input — defaults to ${{ github.workspace }}
+        # The workspace contains the action source, not a Minecraft project,
+        # so no packs will be found and the action should succeed.
+
+      - name: Assert action succeeded with default folder
+        run: |
+          echo "Action completed successfully using default folder"
+          echo "PASS"

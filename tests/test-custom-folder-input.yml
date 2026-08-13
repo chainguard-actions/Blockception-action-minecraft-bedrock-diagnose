@@ -1,0 +1,43 @@
+name: Test custom folder input with nested structure
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create a nested project structure
+        run: |
+          mkdir -p /tmp/mc-project/packs/my_behavior_pack
+          # Write a valid behavior pack manifest.json in a nested subfolder
+          cat > /tmp/mc-project/packs/my_behavior_pack/manifest.json << 'EOF'
+          {
+            "format_version": 2,
+            "header": {
+              "name": "Nested Behavior Pack",
+              "description": "A nested test behavior pack",
+              "uuid": "aaaabbbb-aaaa-bbbb-cccc-ddddeeeeffffg",
+              "version": [1, 0, 0],
+              "min_engine_version": [1, 17, 0]
+            },
+            "modules": [
+              {
+                "type": "data",
+                "uuid": "aaaabbbb-aaaa-bbbb-cccc-ddddeeeeffff",
+                "version": [1, 0, 0]
+              }
+            ]
+          }
+          EOF
+
+      - id: action
+        name: Run diagnose on nested project folder
+        uses: .
+        with:
+          folder: /tmp/mc-project
+
+      - name: Assert action succeeded with custom folder
+        run: |
+          echo "Action completed successfully with custom nested folder"
+          echo "PASS"

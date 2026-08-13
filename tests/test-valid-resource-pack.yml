@@ -1,0 +1,43 @@
+name: Test valid Minecraft Bedrock resource pack
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create a valid resource pack structure
+        run: |
+          mkdir -p /tmp/mc-valid-rp/resource_pack
+          # Write a valid resource pack manifest.json
+          cat > /tmp/mc-valid-rp/resource_pack/manifest.json << 'EOF'
+          {
+            "format_version": 2,
+            "header": {
+              "name": "Test Resource Pack",
+              "description": "A test resource pack",
+              "uuid": "abcdef12-abcd-abcd-abcd-abcdef123456",
+              "version": [1, 0, 0],
+              "min_engine_version": [1, 16, 0]
+            },
+            "modules": [
+              {
+                "type": "resources",
+                "uuid": "abcdef12-abcd-abcd-abcd-abcdef654321",
+                "version": [1, 0, 0]
+              }
+            ]
+          }
+          EOF
+
+      - id: action
+        name: Run diagnose on valid resource pack
+        uses: .
+        with:
+          folder: /tmp/mc-valid-rp
+
+      - name: Assert action succeeded
+        run: |
+          echo "Action completed successfully with a valid resource pack"
+          echo "PASS"

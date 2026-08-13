@@ -1,4 +1,4 @@
-name: Test with valid Minecraft Bedrock resource pack
+name: Test valid Minecraft Bedrock resource pack
 on:
   workflow_dispatch:
 jobs:
@@ -7,22 +7,22 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Create valid resource pack structure
+      - name: Create a valid Minecraft Bedrock resource pack
         run: |
-          mkdir -p /tmp/mc-rp/resource_pack/textures
-          cat > /tmp/mc-rp/resource_pack/manifest.json << 'EOF'
+          mkdir -p /tmp/mc-rp-test/resource_pack
+          # Write a valid resource pack manifest
+          cat > /tmp/mc-rp-test/resource_pack/manifest.json << 'EOF'
           {
             "format_version": 2,
             "header": {
-              "description": "Test Resource Pack",
-              "name": "Test RP",
+              "name": "Test Resource Pack",
+              "description": "A test resource pack",
               "uuid": "abcdef12-abcd-abcd-abcd-abcdef123456",
               "version": [1, 0, 0],
               "min_engine_version": [1, 16, 0]
             },
             "modules": [
               {
-                "description": "Test Resource Pack Module",
                 "type": "resources",
                 "uuid": "abcdef12-abcd-abcd-abcd-abcdef123457",
                 "version": [1, 0, 0]
@@ -31,13 +31,13 @@ jobs:
           }
           EOF
 
-      - name: Run action against resource pack folder
+      - name: Run action on valid resource pack folder
         id: action
         uses: .
         with:
-          folder: /tmp/mc-rp
+          folder: /tmp/mc-rp-test
 
-      - name: Assert action completed
+      - name: Assert action completed successfully
         run: |
-          echo "Action completed successfully with valid resource pack"
+          echo "Action completed successfully on valid resource pack"
           echo "PASS"

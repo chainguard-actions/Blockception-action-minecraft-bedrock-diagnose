@@ -1,4 +1,4 @@
-name: Test with valid Minecraft Bedrock behavior pack
+name: Test valid Minecraft Bedrock behavior pack
 on:
   workflow_dispatch:
 jobs:
@@ -7,22 +7,22 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Create valid behavior pack structure
+      - name: Create a valid Minecraft Bedrock behavior pack
         run: |
-          mkdir -p /tmp/mc-project/behavior_pack
-          cat > /tmp/mc-project/behavior_pack/manifest.json << 'EOF'
+          mkdir -p /tmp/mc-bp-test/behavior_pack
+          # Write a valid behavior pack manifest
+          cat > /tmp/mc-bp-test/behavior_pack/manifest.json << 'EOF'
           {
             "format_version": 2,
             "header": {
-              "description": "Test Behavior Pack",
-              "name": "Test BP",
+              "name": "Test Behavior Pack",
+              "description": "A test behavior pack",
               "uuid": "12345678-1234-1234-1234-123456789abc",
               "version": [1, 0, 0],
               "min_engine_version": [1, 16, 0]
             },
             "modules": [
               {
-                "description": "Test Behavior Pack Module",
                 "type": "data",
                 "uuid": "12345678-1234-1234-1234-123456789abd",
                 "version": [1, 0, 0]
@@ -31,13 +31,13 @@ jobs:
           }
           EOF
 
-      - name: Run action against behavior pack folder
+      - name: Run action on valid behavior pack folder
         id: action
         uses: .
         with:
-          folder: /tmp/mc-project
+          folder: /tmp/mc-bp-test
 
-      - name: Assert action completed
+      - name: Assert action completed successfully
         run: |
-          echo "Action completed successfully with valid behavior pack"
+          echo "Action completed successfully on valid behavior pack"
           echo "PASS"

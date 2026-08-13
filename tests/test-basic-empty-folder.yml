@@ -8,15 +8,15 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Create empty test folder
-        run: mkdir -p /tmp/mc-empty
+        run: mkdir -p /tmp/mc-empty-test
 
-      - name: Run action against empty folder
+      - name: Run action on empty folder
         id: action
         uses: .
         with:
-          folder: /tmp/mc-empty
+          folder: /tmp/mc-empty-test
 
-      - name: Assert action completed without failure
+      - name: Assert action completed successfully
         run: |
-          echo "Action completed successfully with no Minecraft packs found"
+          echo "Action completed without errors on empty folder"
           echo "PASS"

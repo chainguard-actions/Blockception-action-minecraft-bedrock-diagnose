@@ -1,0 +1,42 @@
+name: Test with valid Minecraft Behavior Pack
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create valid Behavior Pack structure
+        run: |
+          mkdir -p /tmp/mc-bp-test/my_behavior_pack
+          cat > /tmp/mc-bp-test/my_behavior_pack/manifest.json << 'EOF'
+          {
+            "format_version": 2,
+            "header": {
+              "name": "Test Behavior Pack",
+              "description": "A test behavior pack",
+              "uuid": "12345678-1234-1234-1234-123456789abc",
+              "version": [1, 0, 0],
+              "min_engine_version": [1, 20, 0]
+            },
+            "modules": [
+              {
+                "type": "data",
+                "uuid": "87654321-4321-4321-4321-cba987654321",
+                "version": [1, 0, 0]
+              }
+            ]
+          }
+          EOF
+
+      - id: action
+        name: Run diagnose on valid behavior pack
+        uses: .
+        with:
+          folder: /tmp/mc-bp-test
+
+      - name: Assert action completed successfully
+        run: |
+          echo "Action completed on valid behavior pack folder"
+          echo "PASS"

@@ -1,0 +1,22 @@
+name: Test basic usage with empty folder
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create empty test folder
+        run: mkdir -p /tmp/mc-empty-test
+
+      - id: action
+        name: Run diagnose on empty folder
+        uses: .
+        with:
+          folder: /tmp/mc-empty-test
+
+      - name: Assert action completed successfully
+        run: |
+          echo "Action completed without failure on empty folder"
+          echo "PASS"

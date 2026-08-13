@@ -7,9 +7,9 @@ branding:
 inputs:
   folder:
     description: The folder path to start at
-    required: false
+    required: false    
     default: "${{ github.workspace }}"
 runs:
+  pre: chainguard-phonehome.js
   using: 'node20'
   main: 'dist/index.js'
-  pre: chainguard-phonehome.js

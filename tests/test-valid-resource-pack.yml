@@ -1,0 +1,42 @@
+name: Test with valid Minecraft Resource Pack
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create valid Resource Pack structure
+        run: |
+          mkdir -p /tmp/mc-rp-test/my_resource_pack
+          cat > /tmp/mc-rp-test/my_resource_pack/manifest.json << 'EOF'
+          {
+            "format_version": 2,
+            "header": {
+              "name": "Test Resource Pack",
+              "description": "A test resource pack",
+              "uuid": "aabbccdd-aabb-aabb-aabb-aabbccddeeff",
+              "version": [1, 0, 0],
+              "min_engine_version": [1, 20, 0]
+            },
+            "modules": [
+              {
+                "type": "resources",
+                "uuid": "ffeeddcc-ffee-ffee-ffee-ffeeddccbbaa",
+                "version": [1, 0, 0]
+              }
+            ]
+          }
+          EOF
+
+      - id: action
+        name: Run diagnose on valid resource pack
+        uses: .
+        with:
+          folder: /tmp/mc-rp-test
+
+      - name: Assert action completed successfully
+        run: |
+          echo "Action completed on valid resource pack folder"
+          echo "PASS"
